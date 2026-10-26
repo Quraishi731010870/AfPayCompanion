@@ -21,7 +21,7 @@ class ProfileScreen extends ConsumerWidget {
               child: Row(
                 children: [
                   Image.asset(
-                    'assets/branding/afpay_companion_mark.png',
+                    'assets/demo/aps/profile-afpay-final.jpg',
                     width: 62,
                     height: 62,
                   ),

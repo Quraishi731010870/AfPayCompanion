@@ -72,9 +72,9 @@ flutter:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: assets/branding/afpay_companion_mark.png
-  adaptive_icon_background: "#071D3B"
-  adaptive_icon_foreground: assets/branding/afpay_companion_mark.png
+  image_path: assets/demo/aps/profile-afpay-final.jpg
+  adaptive_icon_background: "#003B52"
+  adaptive_icon_foreground: assets/demo/aps/profile-afpay-final.jpg
   remove_alpha_ios: true
 
   # To add assets to your application, add an assets section, like this:

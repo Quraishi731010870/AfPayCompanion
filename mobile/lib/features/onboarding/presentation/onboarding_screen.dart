@@ -121,7 +121,13 @@ class _OnboardPage extends StatelessWidget {
             borderRadius: BorderRadius.circular(40),
           ),
           child: showLogo
-              ? Image.asset('assets/branding/afpay_companion_mark.png')
+              ? ClipRRect(
+                  borderRadius: BorderRadius.circular(28),
+                  child: Image.asset(
+                    'assets/demo/aps/profile-afpay-final.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                )
               : Icon(
                   data.$1,
                   size: 82,

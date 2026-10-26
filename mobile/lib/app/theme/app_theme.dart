@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 abstract final class AppColors {
-  static const navy = Color(0xFF082B3A),
-      blue = Color(0xFF246BFD),
-      teal = Color(0xFF087F72),
-      mint = Color(0xFF47C8B5),
-      saffron = Color(0xFFF3B33D),
-      lightSurface = Color(0xFFF6F8F8),
-      darkSurface = Color(0xFF071517);
+  static const navy = Color(0xFF003B52),
+      blue = Color(0xFF006B97),
+      teal = Color(0xFF087E8B),
+      mint = Color(0xFF8BCB3F),
+      saffron = Color(0xFFF49A00),
+      lightSurface = Color(0xFFF6F9F7),
+      darkSurface = Color(0xFF03282F);
 }
 
 abstract final class AppSpacing {
@@ -17,11 +17,11 @@ abstract final class AppSpacing {
 ThemeData buildTheme(Brightness brightness) {
   final dark = brightness == Brightness.dark;
   final scheme = ColorScheme.fromSeed(
-    seedColor: AppColors.teal,
+    seedColor: AppColors.blue,
     brightness: brightness,
-    surface: dark ? const Color(0xFF102225) : Colors.white,
-    primary: dark ? const Color(0xFF67DDCB) : AppColors.teal,
-    secondary: dark ? AppColors.saffron : AppColors.teal,
+    surface: dark ? const Color(0xFF0C343B) : Colors.white,
+    primary: dark ? const Color(0xFF5CC8EA) : AppColors.blue,
+    secondary: dark ? const Color(0xFFA6DD61) : AppColors.mint,
   );
   return ThemeData(
     useMaterial3: true,

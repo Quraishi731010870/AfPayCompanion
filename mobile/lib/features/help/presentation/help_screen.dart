@@ -50,7 +50,11 @@ class HelpScreen extends StatelessWidget {
             padding: const EdgeInsets.all(22),
             decoration: BoxDecoration(
               gradient: const LinearGradient(
-                colors: [Color(0xFF073B47), Color(0xFF087F72)],
+                colors: [
+                  Color(0xFF003B52),
+                  Color(0xFF006B97),
+                  Color(0xFF69B83B),
+                ],
               ),
               borderRadius: BorderRadius.circular(28),
             ),

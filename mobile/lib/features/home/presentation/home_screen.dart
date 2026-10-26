@@ -31,8 +31,8 @@ class HomeScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Image.asset(
-                'assets/demo/aps/logo-aps.png',
-                fit: BoxFit.contain,
+                'assets/demo/aps/profile-afpay-final.jpg',
+                fit: BoxFit.cover,
               ),
             ),
             const SizedBox(width: 10),
@@ -69,11 +69,15 @@ class HomeScreen extends StatelessWidget {
               gradient: const LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [Color(0xFF073B47), Color(0xFF087F72)],
+                colors: [
+                  Color(0xFF003B52),
+                  Color(0xFF006B97),
+                  Color(0xFF69B83B),
+                ],
               ),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF087F72).withValues(alpha: .22),
+                  color: const Color(0xFF006B97).withValues(alpha: .25),
                   blurRadius: 28,
                   offset: const Offset(0, 12),
                 ),
@@ -92,7 +96,7 @@ class HomeScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(99),
                   ),
                   child: Text(
-                    'APS demo • ${l.goodMorning}',
+                    'AfPay • ${l.goodMorning}',
                     style: const TextStyle(
                       color: Color(0xFFD8FFF8),
                       fontWeight: FontWeight.w700,
