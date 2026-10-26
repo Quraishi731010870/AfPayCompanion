@@ -17,7 +17,7 @@ class SectionHeader extends StatelessWidget {
         child: Text(
           title,
           style: Theme.of(context).textTheme.titleLarge
-              ?.copyWith(fontWeight: FontWeight.w700),
+              ?.copyWith(fontWeight: FontWeight.w800, letterSpacing: -.25),
         ),
       ),
       if (action != null) TextButton(onPressed: onAction, child: Text(action!)),
@@ -35,20 +35,31 @@ class SearchEntry extends StatelessWidget {
     label: hint,
     child: InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: BorderRadius.circular(20),
       child: Ink(
-        height: 58,
+        height: 60,
         padding: const EdgeInsets.symmetric(horizontal: 18),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: Theme.of(context).colorScheme.outlineVariant,
+            color: Theme.of(context).colorScheme.outlineVariant
+                .withValues(alpha: .65),
           ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: .035),
+              blurRadius: 18,
+              offset: const Offset(0, 7),
+            ),
+          ],
         ),
         child: Row(
           children: [
-            const Icon(Icons.search),
+            Icon(
+              Icons.search_rounded,
+              color: Theme.of(context).colorScheme.primary,
+            ),
             const SizedBox(width: 12),
             Expanded(
               child: Text(
@@ -58,7 +69,19 @@ class SearchEntry extends StatelessWidget {
                 ),
               ),
             ),
-            const Icon(Icons.tune),
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary
+                    .withValues(alpha: .09),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                Icons.tune_rounded,
+                size: 19,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
           ],
         ),
       ),

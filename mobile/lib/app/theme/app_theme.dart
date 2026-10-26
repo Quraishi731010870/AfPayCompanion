@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 abstract final class AppColors {
-  static const navy = Color(0xFF071D3B),
-      blue = Color(0xFF1565C0),
-      teal = Color(0xFF008F83),
-      saffron = Color(0xFFF4B942),
-      lightSurface = Color(0xFFF5F7FA),
-      darkSurface = Color(0xFF07111F);
+  static const navy = Color(0xFF082B3A),
+      blue = Color(0xFF246BFD),
+      teal = Color(0xFF087F72),
+      mint = Color(0xFF47C8B5),
+      saffron = Color(0xFFF3B33D),
+      lightSurface = Color(0xFFF6F8F8),
+      darkSurface = Color(0xFF071517);
 }
 
 abstract final class AppSpacing {
@@ -18,8 +19,8 @@ ThemeData buildTheme(Brightness brightness) {
   final scheme = ColorScheme.fromSeed(
     seedColor: AppColors.teal,
     brightness: brightness,
-    surface: dark ? const Color(0xFF101D2D) : Colors.white,
-    primary: dark ? const Color(0xFF5ED6C8) : AppColors.navy,
+    surface: dark ? const Color(0xFF102225) : Colors.white,
+    primary: dark ? const Color(0xFF67DDCB) : AppColors.teal,
     secondary: dark ? AppColors.saffron : AppColors.teal,
   );
   return ThemeData(
@@ -29,18 +30,32 @@ ThemeData buildTheme(Brightness brightness) {
     scaffoldBackgroundColor: dark
         ? AppColors.darkSurface
         : AppColors.lightSurface,
+    fontFamily: 'sans-serif',
     textTheme: Typography.material2021(platform: TargetPlatform.android).black
         .apply(
           bodyColor: dark ? const Color(0xFFE7EDF5) : AppColors.navy,
           displayColor: dark ? Colors.white : AppColors.navy,
         ),
+    appBarTheme: AppBarTheme(
+      elevation: 0,
+      scrolledUnderElevation: 0,
+      backgroundColor: Colors.transparent,
+      foregroundColor: dark ? Colors.white : AppColors.navy,
+      centerTitle: false,
+      titleTextStyle: TextStyle(
+        color: dark ? Colors.white : AppColors.navy,
+        fontSize: 21,
+        fontWeight: FontWeight.w800,
+        letterSpacing: -.35,
+      ),
+    ),
     cardTheme: CardThemeData(
       elevation: 0,
       color: scheme.surface,
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-        side: BorderSide(color: scheme.outlineVariant.withValues(alpha: .55)),
+        borderRadius: BorderRadius.circular(24),
+        side: BorderSide(color: scheme.outlineVariant.withValues(alpha: .42)),
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
@@ -59,8 +74,24 @@ ThemeData buildTheme(Brightness brightness) {
       ),
     ),
     navigationBarTheme: NavigationBarThemeData(
-      height: 72,
-      indicatorColor: scheme.primaryContainer,
+      height: 68,
+      elevation: 0,
+      backgroundColor: scheme.surface,
+      indicatorColor: scheme.primary.withValues(alpha: .13),
+      labelTextStyle: WidgetStateProperty.resolveWith(
+        (states) => TextStyle(
+          fontSize: 11,
+          fontWeight: states.contains(WidgetState.selected)
+              ? FontWeight.w800
+              : FontWeight.w600,
+          color: states.contains(WidgetState.selected)
+              ? scheme.primary
+              : scheme.onSurfaceVariant,
+        ),
+      ),
+    ),
+    dividerTheme: DividerThemeData(
+      color: scheme.outlineVariant.withValues(alpha: .45),
     ),
   );
 }

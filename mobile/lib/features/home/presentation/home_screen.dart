@@ -19,14 +19,15 @@ class HomeScreen extends StatelessWidget {
     ];
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 70,
         title: Row(
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(9),
               child: Image.asset(
                 'assets/branding/afpay_companion_mark.png',
-                width: 36,
-                height: 36,
+                width: 40,
+                height: 40,
               ),
             ),
             const SizedBox(width: 10),
@@ -39,30 +40,80 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.notifications_outlined),
-            tooltip: l.notifications,
+          Container(
+            margin: const EdgeInsetsDirectional.only(end: 8),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface,
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.notifications_none_rounded),
+              tooltip: l.notifications,
+            ),
           ),
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.all(18),
+        padding: const EdgeInsets.fromLTRB(18, 8, 18, 28),
         children: [
-          Text(
-            l.goodMorning,
-            style: Theme.of(context).textTheme.headlineMedium
-                ?.copyWith(fontWeight: FontWeight.w800),
-          ),
-          Text(
-            l.welcomeMessage,
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
+          Container(
+            padding: const EdgeInsets.fromLTRB(22, 22, 22, 24),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(28),
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Color(0xFF073B47), Color(0xFF087F72)],
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFF087F72).withValues(alpha: .22),
+                  blurRadius: 28,
+                  offset: const Offset(0, 12),
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: .12),
+                    borderRadius: BorderRadius.circular(99),
+                  ),
+                  child: Text(
+                    l.goodMorning,
+                    style: const TextStyle(
+                      color: Color(0xFFD8FFF8),
+                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  l.welcomeMessage,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w800,
+                    height: 1.15,
+                    letterSpacing: -.4,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                SearchEntry(
+                  hint: l.searchHint,
+                  onTap: () => context.push('/search'),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 22),
-          SearchEntry(hint: l.searchHint, onTap: () => context.push('/search')),
-          const SizedBox(height: 24),
+          const SizedBox(height: 28),
           SectionHeader(title: l.quickActions),
           const SizedBox(height: 12),
           GridView.builder(
@@ -70,7 +121,7 @@ class HomeScreen extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 190,
-              mainAxisExtent: 112,
+              mainAxisExtent: 106,
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,
             ),
@@ -79,13 +130,26 @@ class HomeScreen extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Card(
-            color: Theme.of(context).colorScheme.primaryContainer,
+            color: Theme.of(context).colorScheme.secondaryContainer
+                .withValues(alpha: .55),
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(Icons.support_agent, size: 36),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary
+                          .withValues(alpha: .14),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Icon(
+                      Icons.support_agent_rounded,
+                      size: 28,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
                   const SizedBox(height: 12),
                   Text(
                     l.havingProblem,
@@ -134,16 +198,28 @@ class _ActionCard extends StatelessWidget {
           ? context.go('/help')
           : context.push('/directory/${action.$3}'),
       child: Padding(
-        padding: const EdgeInsets.all(14),
+        padding: const EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(action.$1, color: Theme.of(context).colorScheme.primary),
+            Container(
+              padding: const EdgeInsets.all(9),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary
+                    .withValues(alpha: .10),
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Icon(
+                action.$1,
+                color: Theme.of(context).colorScheme.primary,
+                size: 23,
+              ),
+            ),
             const Spacer(),
             Text(
               action.$2,
               maxLines: 2,
-              style: const TextStyle(fontWeight: FontWeight.w700),
+              style: const TextStyle(fontWeight: FontWeight.w800, height: 1.15),
             ),
           ],
         ),
