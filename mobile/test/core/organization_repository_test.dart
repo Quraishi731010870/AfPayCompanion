@@ -14,8 +14,8 @@ void main() {
   });
 
   test('searches names, cities and services', () async {
-    expect(await repository.getOrganizations(query: 'wallet'), hasLength(1));
-    expect(await repository.getOrganizations(query: 'Herat'), hasLength(1));
-    expect(await repository.getOrganizations(query: 'merchant'), isNotEmpty);
+    expect(await repository.getOrganizations(query: 'HesabPay'), hasLength(1));
+    expect(await repository.getOrganizations(query: 'Kabul'), isNotEmpty);
+    expect(await repository.getOrganizations(query: 'digital'), isNotEmpty);
   });
 }

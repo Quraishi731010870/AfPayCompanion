@@ -129,6 +129,18 @@ class HomeScreen extends StatelessWidget {
             itemBuilder: (_, i) => _ActionCard(action: actions[i]),
           ),
           const SizedBox(height: 24),
+          SectionHeader(
+            title: l.nearbyServices,
+            action: l.viewAll,
+            onAction: () => context.go('/map'),
+          ),
+          const SizedBox(height: 12),
+          _NearbyCard(
+            title: l.findAtm,
+            secondary: l.findPos,
+            action: l.manualSearch,
+          ),
+          const SizedBox(height: 26),
           Card(
             color: Theme.of(context).colorScheme.secondaryContainer
                 .withValues(alpha: .55),
@@ -167,24 +179,229 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 26),
           SectionHeader(
-            title: l.nearbyServices,
+            title: l.learn,
             action: l.viewAll,
-            onAction: () => context.go('/map'),
+            onAction: () => context.go('/explore'),
           ),
-          InfoState(
-            icon: Icons.location_searching,
-            title: l.mapComingSoon,
-            body: l.mapComingSoonBody,
-            action: l.manualSearch,
-            onAction: () => context.push('/search'),
+          const SizedBox(height: 12),
+          SizedBox(
+            height: 190,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                _CampaignCard(
+                  asset: 'assets/demo/aps/secure-payment.jpg',
+                  title: l.securityTips,
+                ),
+                _CampaignCard(
+                  asset: 'assets/demo/aps/bank-cards.jpg',
+                  title: l.digitalPayments,
+                ),
+                _CampaignCard(
+                  asset: 'assets/demo/aps/POS.jpg',
+                  title: l.merchantServices,
+                ),
+              ],
+            ),
           ),
+          const SizedBox(height: 26),
+          SectionHeader(title: l.announcements),
+          const SizedBox(height: 12),
+          _NoticeCard(title: l.independentDisclaimer),
+          const SizedBox(height: 18),
           SampleDataBanner(text: l.sampleData),
         ],
       ),
     );
   }
+}
+
+class _NearbyCard extends StatelessWidget {
+  const _NearbyCard({
+    required this.title,
+    required this.secondary,
+    required this.action,
+  });
+  final String title, secondary, action;
+
+  @override
+  Widget build(BuildContext context) => Card(
+    clipBehavior: Clip.antiAlias,
+    child: InkWell(
+      onTap: () => context.go('/map'),
+      child: SizedBox(
+        height: 142,
+        child: Stack(
+          children: [
+            PositionedDirectional(
+              end: -24,
+              top: -38,
+              child: Icon(
+                Icons.public_rounded,
+                size: 180,
+                color: Theme.of(context).colorScheme.primary
+                    .withValues(alpha: .07),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      _MapPin(icon: Icons.local_atm_rounded),
+                      const SizedBox(width: 8),
+                      _MapPin(icon: Icons.point_of_sale_rounded),
+                    ],
+                  ),
+                  const Spacer(),
+                  Text(
+                    '$title  •  $secondary',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w800,
+                      fontSize: 16,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.search_rounded,
+                        size: 17,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        action,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const Spacer(),
+                      const Icon(Icons.arrow_forward_rounded, size: 19),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+class _MapPin extends StatelessWidget {
+  const _MapPin({required this.icon});
+  final IconData icon;
+  @override
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.all(9),
+    decoration: BoxDecoration(
+      color: Theme.of(context).colorScheme.primary,
+      borderRadius: BorderRadius.circular(13),
+    ),
+    child: Icon(icon, color: Theme.of(context).colorScheme.onPrimary, size: 20),
+  );
+}
+
+class _CampaignCard extends StatelessWidget {
+  const _CampaignCard({required this.asset, required this.title});
+  final String asset;
+  final String title;
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsetsDirectional.only(end: 12),
+    child: SizedBox(
+      width: 250,
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: () => context.go('/explore'),
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Image.asset(asset, fit: BoxFit.cover),
+              const DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.transparent, Color(0xD9082B3A)],
+                  ),
+                ),
+              ),
+              PositionedDirectional(
+                start: 16,
+                end: 16,
+                bottom: 14,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ),
+                    const Icon(
+                      Icons.arrow_forward_rounded,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+class _NoticeCard extends StatelessWidget {
+  const _NoticeCard({required this.title});
+  final String title;
+  @override
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.all(16),
+    decoration: BoxDecoration(
+      color: Theme.of(context).colorScheme.surface,
+      borderRadius: BorderRadius.circular(20),
+      border: Border.all(
+        color: Theme.of(context).colorScheme.outlineVariant
+            .withValues(alpha: .5),
+      ),
+    ),
+    child: Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: const Color(0xFFF3B33D).withValues(alpha: .16),
+            borderRadius: BorderRadius.circular(14),
+          ),
+          child: const Icon(Icons.campaign_outlined, color: Color(0xFF9A6700)),
+        ),
+        const SizedBox(width: 13),
+        Expanded(
+          child: Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.w700, height: 1.35),
+          ),
+        ),
+        const Icon(Icons.chevron_right_rounded),
+      ],
+    ),
+  );
 }
 
 class _ActionCard extends StatelessWidget {

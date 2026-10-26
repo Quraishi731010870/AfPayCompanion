@@ -48,11 +48,32 @@ class OrganizationDetailScreen extends ConsumerWidget {
             children: [
               SampleDataBanner(text: l.sampleData),
               const SizedBox(height: 18),
-              CircleAvatar(
-                radius: 38,
-                child: Text(
-                  o.shortName,
-                  style: const TextStyle(fontWeight: FontWeight.w800),
+              Center(
+                child: Container(
+                  width: 84,
+                  height: 84,
+                  padding: EdgeInsets.all(o.imageAsset == null ? 0 : 10),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  child: o.imageAsset == null
+                      ? Center(
+                          child: Text(
+                            o.shortName,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 18,
+                            ),
+                          ),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(18),
+                          child: Image.asset(
+                            o.imageAsset!,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
                 ),
               ),
               const SizedBox(height: 14),

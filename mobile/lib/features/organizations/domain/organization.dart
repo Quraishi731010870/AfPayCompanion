@@ -18,6 +18,7 @@ class Organization {
     required this.sourceUrl,
     required this.lastVerified,
     required this.status,
+    this.imageAsset,
   });
   final String id,
       name,
@@ -29,6 +30,7 @@ class Organization {
       website,
       source,
       sourceUrl;
+  final String? imageAsset;
   final OrganizationType type;
   final List<String> services;
   final DateTime lastVerified;

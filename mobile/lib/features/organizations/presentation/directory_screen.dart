@@ -93,13 +93,28 @@ class OrganizationCard extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Row(
             children: [
-              CircleAvatar(
-                radius: 26,
-                backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                child: Text(
-                  initials,
-                  style: const TextStyle(fontWeight: FontWeight.w800),
+              Container(
+                width: 58,
+                height: 58,
+                padding: EdgeInsets.all(item.imageAsset == null ? 0 : 7),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  borderRadius: BorderRadius.circular(18),
                 ),
+                child: item.imageAsset == null
+                    ? Center(
+                        child: Text(
+                          initials,
+                          style: const TextStyle(fontWeight: FontWeight.w800),
+                        ),
+                      )
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.asset(
+                          item.imageAsset!,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
               ),
               const SizedBox(width: 14),
               Expanded(
