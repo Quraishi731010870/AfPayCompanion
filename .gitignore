@@ -1,0 +1,16 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+**/.dart_tool/
+**/.flutter-plugins-dependencies
+**/.idea/
+**/*.iml
+**/build/
+**/android/local.properties
+**/ios/Flutter/ephemeral/
+**/Generated.xcconfig
+**/flutter_export_environment.sh
+node_modules/
+__pycache__/
+.pytest_cache/

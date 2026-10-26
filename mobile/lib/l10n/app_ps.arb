@@ -1,0 +1,19 @@
+{
+  "@@locale": "ps",
+  "appName": "افغان‌پی ملګری",
+  "tagline": "په افغانستان کې د ډیجیټلي تادیاتو لارښود",
+  "independentDisclaimer": "افغان‌پی ملګری یو خپلواک معلوماتي اپلېکېشن دی.",
+  "continueLabel": "دوام", "skip": "پرېښودل", "getStarted": "پیل کړئ",
+  "onboardingFindTitle": "د تادیې خدمتونه ومومئ", "onboardingFindBody": "اې‌ټي‌اېم، پوز، بانکونه او ډیجیټلي تادیې خدمتونه ومومئ.",
+  "onboardingHelpTitle": "روښانه مرسته ترلاسه کړئ", "onboardingHelpBody": "د تادیې ستونزې وپېژنئ او مناسب بل ګام ومومئ.",
+  "onboardingLearnTitle": "خبر اوسئ", "onboardingLearnBody": "مهم خبرونه ترلاسه او د ډیجیټلي تادیاتو خوندي کارول زده کړئ.",
+  "home": "کور", "explore": "سپړنه", "map": "نقشه", "help": "مرسته", "profile": "پروفایل",
+  "goodMorning": "سهار مو پخیر", "welcomeMessage": "نن ستاسو د تادیاتو لپاره څنګه مرسته وکړو؟", "searchHint": "بانک، اې‌ټي‌اېم، پوز او خدمتونه ولټوئ…",
+  "quickActions": "چټک خدمتونه", "findAtm": "اې‌ټي‌اېم ومومئ", "findPos": "پوز ومومئ", "findBank": "بانک ومومئ", "findAgent": "استازی ومومئ", "paymentHelp": "د تادیې مرسته", "disputeHelp": "د شکایت مرسته",
+  "nearbyServices": "نږدې خدمتونه", "viewAll": "ټول وګورئ", "havingProblem": "د تادیې ستونزه لرئ؟", "problemBody": "څو ساده پوښتنې ځواب کړئ او روښانه بل ګام ترلاسه کړئ.", "getHelp": "مرسته واخلئ", "learn": "زده کړه", "announcements": "خبرتیاوې", "sampleData": "د پراختیا بېلګه — تایید شوي عملیاتي معلومات نه دي",
+  "banking": "بانکداري", "digitalPayments": "ډیجیټلي تادیې", "merchantServices": "د سوداګرو خدمتونه", "support": "ملاتړ", "education": "زده کړه", "banks": "بانکونه", "branches": "څانګې", "atms": "اې‌ټي‌اېمونه", "emis": "برېښنايي پولي ادارې", "paymentInstitutions": "د تادیې ادارې", "wallets": "بټوې", "pos": "پوز ځایونه", "agents": "استازي", "troubleshooting": "ستونزه حلول", "disputes": "شکایتونه", "faqs": "عامې پوښتنې", "securityTips": "امنیتي لارښوونې",
+  "mapComingSoon": "د نقشې بنسټ چمتو دی", "mapComingSoonBody": "تایید شوي نښې او د موقعیت اجازه په درېیم پړاو کې راځي.", "manualSearch": "سیمه ولټوئ",
+  "helpTitle": "په څه کې مرستې ته اړتیا لرئ؟", "statusExplainer": "د تادیې حالت تشریح", "troubleshooter": "لارښود ستونزه حلول", "disputeAssistant": "شکایت چمتو کړئ", "calculators": "د تادیې محاسبې", "emergencyInfo": "مهم مرستندویه معلومات",
+  "appearance": "بڼه", "language": "ژبه", "systemTheme": "د سیسټم بڼه", "lightTheme": "روښانه", "darkTheme": "تیاره", "favorites": "خوښې", "notifications": "خبرتیاوې", "privacy": "محرمیت", "about": "په اړه", "sendFeedback": "نظر ولېږئ", "locationPermission": "د موقعیت اجازه", "notRequested": "نه ده غوښتل شوې",
+  "search": "لټون", "recentSearches": "وروستي لټونونه", "noResults": "پایله ونه موندل شوه", "noResultsBody": "بل نوم، کټګوري یا ځای وازمویئ.", "clear": "پاکول", "verified": "تایید شوی", "pendingVerification": "د تایید په تمه", "communityReported": "د خلکو راپور", "outdated": "زوړ", "lastVerified": "وروستی تایید", "services": "خدمتونه", "contact": "اړیکه", "locations": "ځایونه", "officialSource": "د سرچینې معلومات", "reportIncorrect": "ناسم معلومات راپور کړئ", "directions": "لارښوونې", "website": "وېب‌پاڼه", "offline": "افلاین حالت", "retry": "بیا هڅه", "somethingWrong": "ستونزه رامنځته شوه. بیا هڅه وکړئ.", "noFavorites": "تر اوسه خوښې نشته", "noFavoritesBody": "ګټور خدمتونه د چټک لاسرسي لپاره خوندي کړئ.", "directory": "لړلیک"
+}
