@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/widgets/common.dart';
 import '../../../l10n/app_localizations.dart';
@@ -11,7 +15,11 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
+  static const _mapsEnabled = bool.fromEnvironment('GOOGLE_MAPS_ENABLED');
+  static const _kabul = LatLng(34.5553, 69.2075);
   int selected = 0;
+  GoogleMapController? mapController;
+  late final Future<List<ConnectivityResult>> connectivity;
   final filters = const ['All', 'ATM', 'POS', 'Banks', 'Agents'];
   final places = const [
     ('ATM', 'Demo ATM — Shahr-e-Naw', '0.8 km', Icons.local_atm_rounded),
@@ -23,6 +31,12 @@ class _MapScreenState extends State<MapScreen> {
     ),
     ('POS', 'Demo merchant POS', '1.7 km', Icons.point_of_sale_rounded),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    connectivity = Connectivity().checkConnectivity();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,8 +81,16 @@ class _MapScreenState extends State<MapScreen> {
             child: Stack(
               children: [
                 Positioned.fill(
-                  child: CustomPaint(
-                    painter: _MapPainter(Theme.of(context).colorScheme),
+                  child: FutureBuilder<List<ConnectivityResult>>(
+                    future: connectivity,
+                    builder: (_, snapshot) {
+                      final online =
+                          snapshot.data?.any(
+                            (x) => x != ConnectivityResult.none,
+                          ) ??
+                          false;
+                      return _buildMapSurface(online);
+                    },
                   ),
                 ),
                 const Positioned(
@@ -79,42 +101,12 @@ class _MapScreenState extends State<MapScreen> {
                     text: 'Demo locations — not live operational information',
                   ),
                 ),
-                Positioned(
-                  top: 120,
-                  left: 68,
-                  child: _Pin(
-                    icon: Icons.local_atm_rounded,
-                    active: selected == 0 || selected == 1,
-                  ),
-                ),
-                Positioned(
-                  top: 205,
-                  right: 72,
-                  child: _Pin(
-                    icon: Icons.account_balance_rounded,
-                    active: selected == 0 || selected == 3,
-                  ),
-                ),
-                Positioned(
-                  top: 292,
-                  left: 135,
-                  child: _Pin(
-                    icon: Icons.point_of_sale_rounded,
-                    active: selected == 0 || selected == 2,
-                  ),
-                ),
                 PositionedDirectional(
                   end: 18,
                   bottom: 18,
                   child: FloatingActionButton.small(
                     heroTag: 'location',
-                    onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Demo mode: use search to choose an area.',
-                        ),
-                      ),
-                    ),
+                    onPressed: _goToCurrentLocation,
                     child: const Icon(Icons.my_location_rounded),
                   ),
                 ),
@@ -181,14 +173,7 @@ class _MapScreenState extends State<MapScreen> {
                       ),
                       subtitle: Text('${p.$1} • ${p.$3}'),
                       trailing: IconButton(
-                        onPressed: () => ScaffoldMessenger.of(context)
-                            .showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                  'Directions require a verified live location.',
-                                ),
-                              ),
-                            ),
+                        onPressed: () => _openDirections(p.$2),
                         icon: const Icon(Icons.directions_outlined),
                       ),
                     ),
@@ -198,6 +183,163 @@ class _MapScreenState extends State<MapScreen> {
         ],
       ),
     );
+  }
+
+  Widget _buildMapSurface(bool online) {
+    if (_mapsEnabled && online) {
+      const markers = [
+        (
+          'Demo ATM — Shahr-e-Naw',
+          LatLng(34.5377, 69.1717),
+          BitmapDescriptor.hueAzure,
+        ),
+        (
+          'Bank directory location',
+          LatLng(34.5484, 69.1845),
+          BitmapDescriptor.hueGreen,
+        ),
+        (
+          'Demo merchant POS',
+          LatLng(34.5206, 69.1792),
+          BitmapDescriptor.hueOrange,
+        ),
+      ];
+      return GoogleMap(
+        initialCameraPosition: const CameraPosition(target: _kabul, zoom: 12.4),
+        onMapCreated: (controller) => mapController = controller,
+        myLocationButtonEnabled: false,
+        mapToolbarEnabled: false,
+        markers: markers.indexed
+            .map(
+              (entry) => Marker(
+                markerId: MarkerId('demo-${entry.$1}'),
+                position: entry.$2.$2,
+                icon: BitmapDescriptor.defaultMarkerWithHue(entry.$2.$3),
+                infoWindow: InfoWindow(
+                  title: entry.$2.$1,
+                  snippet: 'Demo location — verify before travel',
+                ),
+              ),
+            )
+            .toSet(),
+      );
+    }
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: CustomPaint(
+            painter: _MapPainter(Theme.of(context).colorScheme),
+          ),
+        ),
+        Positioned(
+          top: 120,
+          left: 68,
+          child: _Pin(
+            icon: Icons.local_atm_rounded,
+            active: selected == 0 || selected == 1,
+          ),
+        ),
+        Positioned(
+          top: 205,
+          right: 72,
+          child: _Pin(
+            icon: Icons.account_balance_rounded,
+            active: selected == 0 || selected == 3,
+          ),
+        ),
+        Positioned(
+          top: 292,
+          left: 135,
+          child: _Pin(
+            icon: Icons.point_of_sale_rounded,
+            active: selected == 0 || selected == 2,
+          ),
+        ),
+        Positioned(
+          left: 18,
+          right: 18,
+          bottom: 18,
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface
+                  .withValues(alpha: .94),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  online ? Icons.key_off_outlined : Icons.offline_bolt_outlined,
+                  size: 20,
+                ),
+                const SizedBox(width: 9),
+                Expanded(
+                  child: Text(
+                    online
+                        ? 'Add a restricted Google Maps API key to enable the live map.'
+                        : 'Offline mode — showing cached service records without live map tiles.',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Future<void> _goToCurrentLocation() async {
+    if (!_mapsEnabled || mapController == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Live location is available after Google Maps is configured and online.',
+          ),
+        ),
+      );
+      return;
+    }
+    var permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Location permission denied. You can still search manually.',
+            ),
+          ),
+        );
+      }
+      return;
+    }
+    final position = await Geolocator.getCurrentPosition();
+    await mapController?.animateCamera(
+      CameraUpdate.newLatLngZoom(
+        LatLng(position.latitude, position.longitude),
+        15,
+      ),
+    );
+  }
+
+  Future<void> _openDirections(String label) async {
+    final uri = Uri.https('www.google.com', '/maps/search/', {
+      'api': '1',
+      'query': '$label, Kabul, Afghanistan',
+    });
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication) &&
+        mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Unable to open Google Maps.')),
+      );
+    }
   }
 }
 

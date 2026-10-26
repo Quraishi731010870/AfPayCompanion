@@ -23,7 +23,7 @@ Phase 1 and the Phase 2 foundation are implemented:
 - Loading, empty, error, and clearly labeled development-data states
 - Unit tests and GitHub Actions validation
 
-The included organization records are fictional development samples and must not be treated as operational information.
+The directory uses public-source organization records, while location markers remain clearly labeled demo records and must not be treated as live operational information.
 
 ## Repository layout
 
@@ -54,6 +54,26 @@ Build Android:
 ```bash
 flutter build apk --release
 ```
+
+### Google Maps configuration
+
+The app renders Google Maps online and automatically falls back to cached service records with an offline schematic when connectivity is unavailable. Google map tiles are not stored because Google Maps Platform terms restrict unauthorized offline tile caching.
+
+1. Enable Maps SDK for Android in a billing-enabled Google Cloud project.
+2. Create an Android-restricted key for package `af.afpaycompanion.afpay_companion` and the signing certificate fingerprint.
+3. Add the key to the ignored `mobile/android/local.properties` file:
+
+```properties
+MAPS_API_KEY=your_restricted_android_key
+```
+
+4. Enable the live map at build time:
+
+```bash
+flutter build apk --release --dart-define=GOOGLE_MAPS_ENABLED=true
+```
+
+Never commit the API key. Without this configuration the app deliberately displays the offline-safe map experience.
 
 ## Environments
 
