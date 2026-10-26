@@ -22,12 +22,17 @@ class HomeScreen extends StatelessWidget {
         toolbarHeight: 70,
         title: Row(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(9),
+            Container(
+              width: 44,
+              height: 44,
+              padding: const EdgeInsets.all(3),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+              ),
               child: Image.asset(
-                'assets/branding/afpay_companion_mark.png',
-                width: 40,
-                height: 40,
+                'assets/demo/aps/logo-aps.png',
+                fit: BoxFit.contain,
               ),
             ),
             const SizedBox(width: 10),
@@ -87,7 +92,7 @@ class HomeScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(99),
                   ),
                   child: Text(
-                    l.goodMorning,
+                    'APS demo • ${l.goodMorning}',
                     style: const TextStyle(
                       color: Color(0xFFD8FFF8),
                       fontWeight: FontWeight.w700,
